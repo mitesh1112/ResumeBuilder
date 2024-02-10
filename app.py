@@ -30,7 +30,7 @@ def test(p1, p2):
 @app.route('/generate_resume/<name>/<dob>/<phone>/<email>/<education_1>/<education_1_completion_year>/<education_1_school>/<prof_exp_1>/<role_prof_exp_1>/<company_prof_exp_1>/<worked_from_prof_exp_1>/<worked_till_prof_exp_1>/<expertise>/<apply_for_position>/<hobby>', methods=['GET'])
 def generate_resume(name, dob, phone, email, education_1, education_1_completion_year, education_1_school, prof_exp_1, role_prof_exp_1, company_prof_exp_1, worked_from_prof_exp_1, worked_till_prof_exp_1, expertise, apply_for_position, hobby):    
      # Process the form data
-    GOOGLE_API_KEY = "AIzaSyCFVprvVD5gy5C2ivoqEyMtyPIYZkO_L0g"
+    GOOGLE_API_KEY = "YOU_APP_KEY_HERE"
     genai.configure(api_key=GOOGLE_API_KEY)
     model = genai.GenerativeModel('gemini-pro')
 
