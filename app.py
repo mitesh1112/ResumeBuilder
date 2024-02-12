@@ -30,11 +30,12 @@ def test(p1, p2):
 @app.route('/generate_resume/<name>/<dob>/<phone>/<email>/<education_1>/<education_1_completion_year>/<education_1_school>/<prof_exp_1>/<role_prof_exp_1>/<company_prof_exp_1>/<worked_from_prof_exp_1>/<worked_till_prof_exp_1>/<expertise>/<apply_for_position>/<hobby>', methods=['GET'])
 def generate_resume(name, dob, phone, email, education_1, education_1_completion_year, education_1_school, prof_exp_1, role_prof_exp_1, company_prof_exp_1, worked_from_prof_exp_1, worked_till_prof_exp_1, expertise, apply_for_position, hobby):    
      # Process the form data
-    GOOGLE_API_KEY = "YOU_APP_KEY_HERE"
+    GOOGLE_API_KEY = "YOUR_API_KEY_HERE"
     genai.configure(api_key=GOOGLE_API_KEY)
     model = genai.GenerativeModel('gemini-pro')
 
-    prompt = r'I want you to build a professional resume in a beautifully styled self contained HTML format, using the following information.  Resume should also have summary based on role and good things about the person.\n\n'
+    #prompt = r'I want you to build a professional resume in a beautifully styled self contained HTML format, using the following information.  Resume should also have summary based on role and good things about the person.\n\n'
+    prompt = f'I am applying for the post of {apply_for_position}.  ' + r'I want you to build a professional resume in a beautifully styled self contained HTML format, using the following information.  Resume should contain a header, a resume summary or objective, work experience, education details, and a skill section.\n\n'
     prompt += add_prompt('Name', name)
     prompt += add_prompt('Date of Birth', dob)
     prompt += add_prompt('Phone', phone)
@@ -55,7 +56,8 @@ def generate_resume(name, dob, phone, email, education_1, education_1_completion
     prompt += add_prompt('Hobby', hobby)
 
     response = model.generate_content(prompt)
-    return response.text.replace("```html", ""), 200, {'Content-Type': 'text/html'}
+    resume_html = response.text.replace("```html", "").replace("```", "")
+    return resume_html, 200, {'Content-Type': 'text/html'}
 
 
 @app.route('/', methods=['GET', 'POST'])
